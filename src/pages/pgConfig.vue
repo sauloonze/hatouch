@@ -21,6 +21,11 @@
 					<p class="help-block">Don't include http:// or https://</p>
 				</div>
 				<div class="form-group">
+					<label for="ha_token">HomeAssistant Token</label>
+					<input v-model="config.ha_token" type="text" class="form-control" id="ha_token" placeholder="">
+					<p class="help-block">Generate the token on homeassistant</p>
+				</div>
+				<div class="form-group">
 					<label for="uses_ssl"><input v-model="config.use_ssl" type="checkbox" id="uses_ssl"> Use SSL</label>
 				</div>
 			</div>

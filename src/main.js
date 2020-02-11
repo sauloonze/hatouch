@@ -155,7 +155,7 @@ const store = new Vuex.Store({
 			//Connect to Home Assistant
 			var url = config['ha_url'];
 
-			ws = new WebSocket('wss://'+url+'/api/websocket');
+			ws = new WebSocket('ws://'+url+'/api/websocket');
 			ws.onopen = function() {
 				app.$data['connectedWebsocket'] = true;
 
@@ -164,6 +164,11 @@ const store = new Vuex.Store({
 				   window.clearInterval(window.reconnectTimer);
 				   window.reconnectTimer=0;
 				}
+
+				var token = config['ha_token'];
+				
+				//Get all current states
+				ws.send('{"type": "auth","access_token": "'+ token +'"}');
 				
 				//Get all current states
 				ws.send('{"id":"100","type":"get_states"}');
@@ -422,8 +427,8 @@ const app = new Vue({
 		this.$store.dispatch('CONNECT', this.config);
 
 		var self = this;
-		self.$store.dispatch('UPDATE_ALERTS', self.config);
-		setInterval(function() {self.$store.dispatch('UPDATE_ALERTS', self.config);}, 30000);
+		// self.$store.dispatch('UPDATE_ALERTS', self.config);
+		// setInterval(function() {self.$store.dispatch('UPDATE_ALERTS', self.config);}, 30000);
 
 		this.$data['loaded'] = true;
 
